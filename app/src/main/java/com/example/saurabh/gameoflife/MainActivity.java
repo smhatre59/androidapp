@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,18 +23,14 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    public int counter = 0;
-    private final String PREFS_NAME  = "filename";
-    private final String COUNTER_VALUE    = "count";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Context ctx   = getApplicationContext();
-        SharedPreferences sharedPreferences = ctx.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        android.app.FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container,new GameFragment()).commit();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -45,116 +42,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Button plusOne = (Button)(findViewById(R.id.plusone));
-        Button plusTwo = (Button)(findViewById(R.id.plustwo));
-        Button plusFour = (Button)(findViewById(R.id.plusfour));
-        Button plusTen = (Button)(findViewById(R.id.plusten));
-        Button minusOne = (Button)(findViewById(R.id.minusone));
-        Button minusTwo = (Button)(findViewById(R.id.minustwo));
-        Button minusFour = (Button)(findViewById(R.id.minusfour));
-        Button minusTen = (Button)(findViewById(R.id.minusten));
-        Button clear = (Button)(findViewById(R.id.clear));
-        final TextView score = (TextView)(findViewById(R.id.score));
-        TextView dailyGoal = (TextView)(findViewById(R.id.dialygoal));
-        counter =  sharedPreferences.getInt("count", 0);
-        score.setText(String.valueOf(counter));
 
-        plusOne.setOnClickListener(
-                new Button.OnClickListener() {
-                    public void onClick(View v) {
-                    counter = counter + 1;
-                    score.setText(String.valueOf(counter));
-                        editor.putInt(COUNTER_VALUE, counter);
-                        editor.commit();
-
-                    }
-                }
-        );
-        plusTwo.setOnClickListener(
-                new Button.OnClickListener() {
-                    public void onClick(View v) {
-                        counter = counter + 2;
-                        score.setText(String.valueOf(counter));
-                        editor.putInt(COUNTER_VALUE, counter);
-                        editor.commit();
-                    }
-                }
-        );
-        plusFour.setOnClickListener(
-                new Button.OnClickListener() {
-                    public void onClick(View v) {
-                        counter = counter + 4;
-                        score.setText(String.valueOf(counter));
-                        editor.putInt(COUNTER_VALUE, counter);
-                        editor.commit();
-                    }
-                }
-        );
-        plusTen.setOnClickListener(
-                new Button.OnClickListener() {
-                    public void onClick(View v) {
-                        counter = counter + 10;
-                        score.setText(String.valueOf(counter));
-                        editor.putInt(COUNTER_VALUE, counter);
-                        editor.commit();
-                    }
-                }
-        );
-        minusOne.setOnClickListener(
-                new Button.OnClickListener() {
-                    public void onClick(View v) {
-                        counter = counter - 1;
-                        score.setText(String.valueOf(counter));
-                        editor.putInt(COUNTER_VALUE, counter);
-                        editor.commit();
-                    }
-                }
-        );
-        minusTwo.setOnClickListener(
-                new Button.OnClickListener() {
-                    public void onClick(View v) {
-                        counter = counter - 2;
-                        score.setText(String.valueOf(counter));
-                        editor.putInt(COUNTER_VALUE, counter);
-                        editor.commit();
-
-                    }
-                }
-        );
-        minusFour.setOnClickListener(
-                new Button.OnClickListener() {
-                    public void onClick(View v) {
-                        counter = counter - 4;
-                        score.setText(String.valueOf(counter));
-                        editor.putInt(COUNTER_VALUE, counter);
-                        editor.commit();
-
-                    }
-                }
-        );
-        minusTen.setOnClickListener(
-                new Button.OnClickListener() {
-                    public void onClick(View v) {
-                        counter = counter - 10;
-                        score.setText(String.valueOf(counter));
-                        editor.putInt(COUNTER_VALUE, counter);
-                        editor.commit();
-
-                    }
-                }
-        );
-
-        clear.setOnClickListener(
-                new Button.OnClickListener() {
-                    public void onClick(View v) {
-                        counter = 0;
-                        score.setText(String.valueOf(counter));
-                        editor.putInt(COUNTER_VALUE, counter);
-                        editor.commit();
-
-                    }
-                }
-        );
     }
 
     public void onDestroy() {
@@ -201,7 +89,7 @@ public class MainActivity extends AppCompatActivity
         Fragment objFragment = null;
         if (id == R.id.Home) {
             // Handle the camera action
-
+            objFragment = new GameFragment();
         } else if (id == R.id.Rules) {
             objFragment = new RulesFragment();
 
