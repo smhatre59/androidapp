@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Game of Life</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="rules_text">
+    The rules of the game are simple\n\n
+        1)Assign scores for your daily activities\n\n
+        2)If you complete them add your score,\n
+          if not then subtract them\n\n
+        3)Remember that the daily goal is 50.
+    </string>
+</resources>
